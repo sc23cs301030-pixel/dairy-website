@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ksheera-Krishna Dairy</title>
+
+  <!-- LINK CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="logo">🥛 Ksheera-Krishna Dairy</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#products">Products</a>
+    <a href="#contact">Contact</a>
+    <button class="logout" onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Pure Desi Dairy Products</h1>
+    <p>Fresh • Natural • Delivered Daily</p>
+    <a href="#products" class="hero-btn">Shop Now</a>
+  </div>
+</section>
+
+<!-- ================= TRUST SECTION ================= -->
+<section class="features reveal">
+  <div class="feature">
+    🐄
+    <h3>Farm Fresh</h3>
+    <p>Directly from farmers</p>
+  </div>
+  <div class="feature">
+    🧈
+    <h3>Pure Ghee</h3>
+    <p>No chemicals, no mixing</p>
+  </div>
+  <div class="feature">
+    🚚
+    <h3>Home Delivery</h3>
+    <p>Indore • Bhopal • Dewas</p>
+  </div>
+</section>
+
+<!-- ================= PRODUCTS ================= -->
+<section id="products" class="reveal">
+  <h2 class="section-title">Our Products</h2>
+
+  <div class="products">
+<!-- Skeleton Loader -->
+<div id="skeleton">
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+</div>
+
+    <!-- GHEE -->
+    <div class="card">
+      <img src="images/ghee.jpg">
+      <h3>Desi Ghee</h3>
+      <select class="weight-select" onchange="selectVariant('ghee',this)">
+        <option value="500g" data-price="450">500g – ₹450</option>
+        <option value="1 Kg" data-price="900">1 Kg – ₹900</option>
+      </select>
+      <p>Price: ₹<span id="price-ghee">450</span></p>
+      <button onclick="addToCart('Desi Ghee','ghee')">Add to Cart</button>
+    </div>
+
+    <!-- PANEER -->
+    <div class="card">
+      <img src="images/paneer.jpg">
+      <h3>Paneer</h3>
+      <select class="weight-select" onchange="selectVariant('paneer',this)">
+        <option value="250g" data-price="120">250g – ₹120</option>
+        <option value="500g" data-price="220">500g – ₹220</option>
+      </select>
+      <p>Price: ₹<span id="price-paneer">120</span></p>
+      <button onclick="addToCart('Paneer','paneer')">Add to Cart</button>
+    </div>
+
+    <!-- CURD -->
+    <div class="card">
+      <img src="images/curd.jpg">
+      <h3>Curd</h3>
+      <select class="weight-select" onchange="selectVariant('curd',this)">
+        <option value="500g" data-price="45">500g – ₹45</option>
+        <option value="1 Kg" data-price="90">1 Kg – ₹90</option>
+      </select>
+      <p>Price: ₹<span id="price-curd">45</span></p>
+      <button onclick="addToCart('Curd','curd')">Add to Cart</button>
+    </div>
+
+    <!-- BUTTER -->
+    <div class="card">
+      <img src="images/butter.jpg">
+      <h3>Butter</h3>
+      <select class="weight-select" onchange="selectVariant('butter',this)">
+        <option value="100g" data-price="80">100g – ₹80</option>
+        <option value="250g" data-price="160">250g – ₹160</option>
+      </select>
+      <p>Price: ₹<span id="price-butter">80</span></p>
+      <button onclick="addToCart('Butter','butter')">Add to Cart</button>
+    </div>
+
+    <!-- PEDA -->
+    <div class="card">
+      <img src="images/peda.jpg">
+      <h3>Peda</h3>
+      <select class="weight-select" onchange="selectVariant('peda',this)">
+        <option value="250g" data-price="150">250g – ₹150</option>
+        <option value="500g" data-price="300">500g – ₹300</option>
+      </select>
+      <p>Price: ₹<span id="price-peda">150</span></p>
+      <button onclick="addToCart('Peda','peda')">Add to Cart</button>
+    </div>
+
+    <!-- MILK CAKE -->
+    <div class="card">
+      <img src="images/milkcake.jpg">
+      <h3>Milk Cake</h3>
+      <select class="weight-select" onchange="selectVariant('milkcake',this)">
+        <option value="250g" data-price="175">250g – ₹175</option>
+        <option value="500g" data-price="350">500g – ₹350</option>
+      </select>
+      <p>Price: ₹<span id="price-milkcake">175</span></p>
+      <button onclick="addToCart('Milk Cake','milkcake')">Add to Cart</button>
+    </div>
+
+    <!-- LASSI -->
+    <div class="card">
+      <img src="images/lassi.jpg">
+      <div class="milk-pour"></div>
+
+      <h3>Lassi</h3>
+      <select class="weight-select" onchange="selectVariant('lassi',this)">
+        <option value="500ml" data-price="60">500ml – ₹60</option>
+        <option value="1 L" data-price="120">1 L – ₹120</option>
+      </select>
+      <p>Price: ₹<span id="price-lassi">60</span></p>
+      <button onclick="addToCart('Lassi','lassi')">Add to Cart</button>
+    </div>
+
+    <!-- ICE CREAM -->
+    <div class="card">
+      <img src="images/icecream.jpg">
+      <h3>Ice Cream</h3>
+      <select class="weight-select" onchange="selectVariant('icecream',this)">
+        <option value="250ml" data-price="90">250ml – ₹90</option>
+        <option value="500ml" data-price="180">500ml – ₹180</option>
+      </select>
+      <p>Price: ₹<span id="price-icecream">90</span></p>
+      <button onclick="addToCart('Ice Cream','icecream')">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DELIVERY AREAS ================= -->
+<section class="areas reveal">
+  <h2>Delivery Areas</h2>
+  <p>Indore • Bhopal • Dewas • Shajapur • Shajapur</p>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer" id="contact">
+  <p>© 2026 Ksheera-Krishna Dairy</p>
+  <p>📞 +91 94071-56211</p>
+  <p>📍 Indore, Madhya Pradesh</p>
+</footer>
+
+<!-- ================= CART ================= -->
+<div class="cart">
+  <h2>🛒 Cart</h2>
+  <div id="cartItems"></div>
+  <h3>Total: ₹<span id="total">0</span></h3>
+
+  <button class="checkout-btn" onclick="checkout()">Place Order</button>
+<button class="whatsapp-btn" onclick="sendWhatsApp()">Order on WhatsApp</button>
+
+</div>
+
+<div id="milk-splash"></div>
+
+<!-- LINK JS -->
+<script src="script.js"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  padding-right: 320px; /* space for cart */
+}
+
+/* ================= HEADER ================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #1b5e20;
+  color: white;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.header nav a {
+  color: white;
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.logout {
+  background: #ff5252;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ================= HERO ================= */
+.hero {
+  background: url("images/banner.jpg") center/cover no-repeat;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  color: rgb(0, 0, 0);
+}
+
+.hero-text h1 {
+  font-size: 42px;
+}
+
+.hero-text p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.hero-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 22px;
+  background: #ffeb3b;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+/* ================= FEATURES ================= */
+.features {
+  display: flex;
+  justify-content: space-around;
+  background: white;
+  padding: 30px 10px;
+}
+
+.feature {
+  text-align: center;
+}
+
+.feature h3 {
+  margin: 8px 0;
+}
+
+/* ================= PRODUCTS ================= */
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  margin: 25px 0;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 0 20px 40px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin: 10px 0;
+}
+
+.weight-select {
+  width: 100%;
+  padding: 6px;
+  margin: 8px 0;
+}
+
+.card p {
+  font-weight: bold;
+  margin: 6px 0;
+}
+
+.card button {
+  background: #1b5e20;
+  color: white;
+  border: none;
+  padding: 8px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background: #2e7d32;
+}
+
+/* ================= DELIVERY ================= */
+.areas {
+  text-align: center;
+  padding: 20px;
+  background: #e8f5e9;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  background: #1b5e20;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+/* ================= CART ================= */
+.cart {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: white;
+  padding: 15px;
+  box-shadow: -3px 0 8px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+
+.cart h2 {
+  text-align: center;
+}
+
+#cartItems {
+  margin-top: 15px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cart button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: #25D366;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  body {
+    padding-right: 0;
+  }
+
+  .cart {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    margin-top: 20px;
+  }
+
+  .features {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+/* ================= ANIMATIONS (ADD AT END) ================= */
+
+/* Page load */
+body {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header slide */
+.header {
+  animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Hero text */
+.hero-text {
+  animation: heroFade 1s ease forwards;
+}
+
+@keyframes heroFade {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Product hover */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Buttons */
+.card button,
+.hero-btn,
+.cart button {
+  transition: all 0.25s ease;
+}
+
+.card button:hover {
+  transform: scale(1.05);
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.cart button:hover {
+  background: #1ebe57;
+  transform: scale(1.03);
+}
+
+/* Feature icons */
+.feature {
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+/* Cart add animation */
+.cart-item {
+  animation: cartAdd 0.3s ease-in;
+}
+
+@keyframes cartAdd {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Dropdown focus */
+.weight-select {
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.weight-select:focus {
+  outline: none;
+  border: 1px solid #1b5e20;
+  box-shadow: 0 0 6px rgba(27,94,32,0.5);
+}
+
+/* Logout button */
+.logout {
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.logout:hover {
+  background: #e53935;
+  transform: scale(1.05);
+}
+/* ================= SKELETON LOADER ================= */
+
+#skeleton {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.skeleton-card {
+  height: 280px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 25%,
+    #f5f5f5 37%,
+    #e0e0e0 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+/* ================= SCROLL REVEAL ================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ================= LOGIN PAGE ================= */
+
+.login-body {
+  height: 100vh;
+  background: linear-gradient(#e3f2fd, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Floating milk bubbles */
+.milk-bg span {
+  position: absolute;
+  bottom: -100px;
+  width: 80px;
+  height: 80px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  animation: floatMilk 12s infinite ease-in;
+}
+
+.milk-bg span:nth-child(1) {
+  left: 20%;
+  animation-duration: 10s;
+}
+.milk-bg span:nth-child(2) {
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  animation-duration: 14s;
+}
+.milk-bg span:nth-child(3) {
+  left: 75%;
+  animation-duration: 18s;
+}
+
+@keyframes floatMilk {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+/* Login card */
+.login-box {
+  background: white;
+  padding: 35px;
+  border-radius: 14px;
+  width: 320px;
+  text-align: center;
+  z-index: 10;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  animation: loginPop 0.8s ease;
+}
+
+@keyframes loginPop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.login-box h2 {
+  margin-bottom: 8px;
+}
+
+.login-box p {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background: #1b5e20;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.login-box button:hover {
+  transform: scale(1.05);
+}
+/* ================= MILK POUR EFFECT ================= */
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Milk stream */
+.milk-pour {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  width: 20px;
+  height: 0;
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #f5f5f5
+  );
+  border-radius: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+/* Activate on hover */
+.card:hover .milk-pour {
+  animation: milkFlow 1.2s ease forwards;
+}
+
+/* Milk animation */
+@keyframes milkFlow {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    height: 120px;
+    opacity: 0;
+  }
+}
+/* ================= MILK SPLASH ================= */
+
+#milk-splash {
+  position: fixed;
+  bottom: 100px;
+  right: 140px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #fff 30%, #eee 60%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ================= MILK SPLASH ABOVE HEADER ================= */
+
+
+#milk-splash.active {
+  animation: splash 0.6s ease-out;
+}
+
+@keyframes splash {
+  0% {
+    transform: translateX(-50%) scale(0.2);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* ================= CART BUTTONS ================= */
+
+.checkout-btn {
+  background: #1b5e20; /* dairy green */
+}
+
+.checkout-btn:hover {
+  background: #2e7d32;
+}
+
+.whatsapp-btn {
+  background: #25D366;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe57;
+}

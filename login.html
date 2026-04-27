@@ -1,0 +1,125 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Ksheera-Krishna Dairy</title>
+  
+  <!-- Modern Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+<!-- ULTRA LEGEND ANIMATED BACKGROUND -->
+<div class="milk-ocean">
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+</div>
+
+<div class="bubbles">
+  <span style="--i:11"></span>
+  <span style="--i:12"></span>
+  <span style="--i:24"></span>
+  <span style="--i:10"></span>
+  <span style="--i:14"></span>
+  <span style="--i:23"></span>
+  <span style="--i:18"></span>
+  <span style="--i:16"></span>
+  <span style="--i:19"></span>
+  <span style="--i:20"></span>
+  <span style="--i:22"></span>
+  <span style="--i:25"></span>
+</div>
+
+<!-- PROFESSIONAL LOGIN CARD -->
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="card-glow"></div>
+    
+    <div class="card-content">
+      <div class="brand">
+        <span class="emoji">🥛</span>
+        <h1>Ksheera-Krishna</h1>
+        <p>Pure Dairy • Pure Tradition</p>
+      </div>
+
+      <form id="loginForm" onsubmit="event.preventDefault(); loginUser();">
+        <div class="input-group" style="--d: 0.1s">
+          <input type="text" id="name" required placeholder=" ">
+          <label>Full Name</label>
+          <div class="bar"></div>
+        </div>
+
+        <div class="input-group" style="--d: 0.2s">
+          <input type="tel" id="phone" required placeholder=" ">
+          <label>Mobile Number</label>
+          <div class="bar"></div>
+        </div>
+
+        <div class="input-group" style="--d: 0.3s">
+          <input type="text" id="location" required placeholder=" ">
+          <label>Delivery Location</label>
+          <div class="bar"></div>
+        </div>
+
+        <div class="input-group" style="--d: 0.4s">
+          <input type="password" id="password" required placeholder=" ">
+          <label>Set Password</label>
+          <div class="bar"></div>
+        </div>
+
+        <button type="submit" class="legend-btn ripple">
+          <span>Enter The Dairy</span>
+          <div class="btn-glow"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+function loginUser() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!name || !phone || !location || !password) {
+    alert("⚠️ All fields are compulsory! Please fill in your name, phone, location, and password.");
+    return;
+  }
+
+  // Legend success animation trigger
+  const card = document.querySelector('.login-card');
+  card.style.transform = 'scale(0.9) translateY(-100vh)';
+  card.style.opacity = '0';
+  card.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+  setTimeout(() => {
+    // Current user
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userPhone", phone);
+    localStorage.setItem("userLocation", location);
+    localStorage.setItem("userPassword", password);
+
+    // Save to centralized users list for Admin
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    // Only add if not already there (simple logic)
+    const exists = users.find(u => u.phone === phone);
+    if (!exists) {
+      users.push({ name, phone, location, password });
+      localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    window.location.href = "index.html";
+  }, 600);
+}
+</script>
+
+</body>
+</html>

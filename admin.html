@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Ksheera-Krishna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --golden: #E3A63C;
+      --dark-brown: #4B1F00;
+      --cream: #F2D6A3;
+      --rust: #8A3B12;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: #fdfaf5;
+      color: #333;
+      padding-bottom: 50px;
+    }
+
+    header {
+      background: var(--dark-brown);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: var(--dark-brown);
+      margin: 40px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--cream);
+      padding-bottom: 10px;
+    }
+
+    /* GRID LAYOUTS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.02);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .id-tag {
+      background: var(--cream);
+      color: var(--dark-brown);
+      padding: 4px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .status-tag {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .status-whatsapp { background: #25D366; }
+    .status-admin { background: var(--golden); }
+
+    .info-line {
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .info-line strong {
+      color: var(--rust);
+      width: 80px;
+      display: inline-block;
+    }
+
+    .products-list {
+      background: #fdfaf5;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+
+    .password-box {
+      background: #fff5e6;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px dashed var(--golden);
+    }
+
+    .password-box code {
+      font-family: monospace;
+      color: #d32f2f;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .btn-delete {
+      width: 100%;
+      background: #fee;
+      color: #d32f2f;
+      border: 1px solid #fcc;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: all 0.2s;
+    }
+
+    .btn-delete:hover {
+      background: #d32f2f;
+      color: white;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 50px;
+      color: #aaa;
+      background: white;
+      border-radius: 20px;
+      border: 2px dashed #eee;
+    }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🥛 Admin Dashboard</h1>
+</header>
+
+<div class="container">
+  
+  <!-- USERS SECTION -->
+  <h2 class="section-title">👥 Registered Users</h2>
+  <div id="usersList" class="grid">
+    <!-- Users items will be injected here -->
+  </div>
+
+  <hr style="margin: 50px 0; border: none; border-top: 1px solid #eee;">
+
+  <!-- ORDERS SECTION -->
+  <h2 class="section-title">🛒 Recent Orders</h2>
+  <div id="ordersList" class="grid">
+    <!-- Orders items will be injected here -->
+  </div>
+
+</div>
+
+<script>
+  // LOAD DATA
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+
+  const usersContainer = document.getElementById("usersList");
+  const ordersContainer = document.getElementById("ordersList");
+
+  // RENDER USERS
+  if (users.length === 0) {
+    usersContainer.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No users registered yet.</div>';
+  } else {
+    users.forEach((user, index) => {
+      usersContainer.innerHTML += `
+        <div class="card">
+          <div class="card-header">
+            <span class="id-tag">USER #${index + 1}</span>
+          </div>
+          <div class="info-line"><strong>Name:</strong> ${user.name}</div>
+          <div class="info-line"><strong>Phone:</strong> ${user.phone}</div>
+          <div class="info-line"><strong>Address:</strong> ${user.location}</div>
+          <div class="password-box">
+            <strong>Password:</strong> <code>${user.password}</code>
+          </div>
+          <button class="btn-delete" onclick="deleteUser(${index})">Remove User</button>
+        </div>
+      `;
+    });
+  }
+
+  // RENDER ORDERS
+  if (orders.length === 0) {
+    ordersContainer.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No orders found.</div>';
+  } else {
+    orders.forEach((order, index) => {
+      let productLines = "";
+      order.items.forEach(item => {
+        productLines += `• ${item.name} × ${item.qty}<br>`;
+      });
+
+      ordersContainer.innerHTML += `
+        <div class="card">
+          <div class="card-header">
+            <span class="id-tag">${order.id}</span>
+            <span class="status-tag status-${order.source.toLowerCase()}">${order.source}</span>
+          </div>
+          <div class="info-line"><strong>Customer:</strong> ${order.customerName}</div>
+          <div class="info-line"><strong>Phone:</strong> ${order.customerPhone}</div>
+          <div class="products-list">
+            ${productLines}
+          </div>
+          <div style="font-weight:bold; font-size: 18px; margin-bottom: 5px;">Total: ₹${order.total}</div>
+          <div style="font-size: 12px; color: #888;">${order.time}</div>
+          <button class="btn-delete" onclick="deleteOrder(${index})">Archive Order</button>
+        </div>
+      `;
+    });
+  }
+
+  // ACTIONS
+  function deleteOrder(i) {
+    if (confirm("Archive this order?")) {
+      orders.splice(i, 1);
+      localStorage.setItem("orders", JSON.stringify(orders));
+      location.reload();
+    }
+  }
+
+  function deleteUser(i) {
+    if (confirm("Delete this user's record?")) {
+      users.splice(i, 1);
+      localStorage.setItem("users", JSON.stringify(users));
+      location.reload();
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ksheera-Krishna Dairy</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<!-- APP HEADER -->
+<header class="app-header">
+  <h2>🥛 Fresh Dairy</h2>
+  <button onclick="toggleCart()">🛒</button>
+</header>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="logo">🥛 Ksheera-Krishna Dairy</div>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <nav id="mainNav">
+    <a href="#" onclick="toggleMenu()">Home</a>
+    <a href="#products" onclick="toggleMenu()">Products</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <button class="logout" onclick="logout()">Logout</button>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero parallax">
+  <div class="hero-text">
+    <h1>Pure Desi Dairy Products</h1>
+    <p>Fresh • Natural • Delivered Daily</p>
+    <a href="#products" class="hero-btn">Shop Now</a>
+  </div>
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+<section class="features reveal-up">
+  <div class="feature bounce">
+    🐄
+    <h3>Farm Fresh</h3>
+    <p>Directly from farmers</p>
+  </div>
+  <div class="feature bounce" style="animation-delay: 0.2s">
+    🧈
+    <h3>Pure Ghee</h3>
+    <p>No chemicals, no mixing</p>
+  </div>
+  <div class="feature bounce" style="animation-delay: 0.4s">
+    🚚
+    <h3>Home Delivery</h3>
+    <p>Indore • Bhopal • Dewas</p>
+  </div>
+</section>
+<section class="stats reveal-up">
+  <div class="stat">
+    <h2 class="counter" data-target="120">0</h2>
+    <p>Happy Farmers</p>
+  </div>
+
+  <div class="stat">
+    <h2 class="counter" data-target="2500">0</h2>
+    <p>Orders Delivered</p>
+  </div>
+
+  <div class="stat">
+    <h2 class="counter" data-target="1800">0</h2>
+    <p>Happy Customers</p>
+  </div>
+</section>
+<!-- ================= AI CALL ORDER SECTION ================= -->
+<section class="ai-call-section reveal-up">
+  <h2>📞 कॉल पर ऑर्डर करें</h2>
+  <p>हमारा AI आपको कॉल करके आपका ऑर्डर लेगा</p>
+
+  <button class="ai-call-btn ripple pulse-soft" onclick="requestAICall()">
+    📞 AI से कॉल पर ऑर्डर करें
+  </button>
+
+  <small>यह एक AI कॉल होगी। हमारी टीम बाद में कन्फर्म करेगी।</small>
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+<section id="products" class="reveal-up">
+  <h2 class="section-title">Our Products</h2>
+
+ <div class="products app-products">
+
+
+    <!-- GHEE -->
+    <div class="card reveal-up">
+      <img src="images/ghee.jpg" alt="Desi Ghee">
+      <h3>Desi Ghee</h3>
+      <select class="weight-select" onchange="selectVariant('ghee',this)">
+        <option value="500g" data-price="450">500g – ₹450</option>
+        <option value="1 Kg" data-price="900">1 Kg – ₹900</option>
+      </select>
+      <p>Price: ₹<span id="price-ghee">450</span></p>
+      <button class="ripple" onclick="addToCart('Desi Ghee','ghee')">Add to Cart</button>
+    </div>
+
+    <!-- PANEER -->
+    <div class="card reveal-up">
+      <img src="images/paneer.jpg" alt="Paneer">
+      <h3>Paneer</h3>
+      <select class="weight-select" onchange="selectVariant('paneer',this)">
+        <option value="250g" data-price="120">250g – ₹120</option>
+        <option value="500g" data-price="220">500g – ₹220</option>
+      </select>
+      <p>Price: ₹<span id="price-paneer">120</span></p>
+      <button class="ripple" onclick="addToCart('Paneer','paneer')">Add to Cart</button>
+    </div>
+
+    <!-- CURD -->
+    <div class="card reveal-up">
+      <img src="images/curd.jpg" alt="Curd">
+      <h3>Curd</h3>
+      <select class="weight-select" onchange="selectVariant('curd',this)">
+        <option value="500g" data-price="45">500g – ₹45</option>
+        <option value="1 Kg" data-price="90">1 Kg – ₹90</option>
+      </select>
+      <p>Price: ₹<span id="price-curd">45</span></p>
+      <button class="ripple" onclick="addToCart('Curd','curd')">Add to Cart</button>
+    </div>
+
+    <!-- BUTTER -->
+    <div class="card reveal-up">
+      <img src="images/butter.jpg" alt="Butter">
+      <h3>Butter</h3>
+      <select class="weight-select" onchange="selectVariant('butter',this)">
+        <option value="100g" data-price="80">100g – ₹80</option>
+        <option value="250g" data-price="160">250g – ₹160</option>
+      </select>
+      <p>Price: ₹<span id="price-butter">80</span></p>
+      <button class="ripple" onclick="addToCart('Butter','butter')">Add to Cart</button>
+    </div>
+
+    <!-- PEDA -->
+    <div class="card reveal-up">
+      <img src="images/peda.jpg" alt="Peda">
+      <h3>Peda</h3>
+      <select class="weight-select" onchange="selectVariant('peda',this)">
+        <option value="250g" data-price="150">250g – ₹150</option>
+        <option value="500g" data-price="300">500g – ₹300</option>
+      </select>
+      <p>Price: ₹<span id="price-peda">150</span></p>
+      <button class="ripple" onclick="addToCart('Peda','peda')">Add to Cart</button>
+    </div>
+
+    <!-- MILK CAKE -->
+    <div class="card reveal-up">
+      <img src="images/milkcake.jpg" alt="Milk Cake">
+      <h3>Milk Cake</h3>
+      <select class="weight-select" onchange="selectVariant('milkcake',this)">
+        <option value="250g" data-price="175">250g – ₹175</option>
+        <option value="500g" data-price="350">500g – ₹350</option>
+      </select>
+      <p>Price: ₹<span id="price-milkcake">175</span></p>
+      <button class="ripple" onclick="addToCart('Milk Cake','milkcake')">Add to Cart</button>
+    </div>
+
+    <!-- LASSI -->
+    <div class="card reveal-up">
+      <img src="images/lassi.jpg" alt="Lassi">
+      <h3>Lassi</h3>
+      <select class="weight-select" onchange="selectVariant('lassi',this)">
+        <option value="500ml" data-price="60">500ml – ₹60</option>
+        <option value="1 L" data-price="120">1 L – ₹120</option>
+      </select>
+      <p>Price: ₹<span id="price-lassi">60</span></p>
+      <button class="ripple" onclick="addToCart('Lassi','lassi')">Add to Cart</button>
+    </div>
+
+    <!-- ICE CREAM -->
+    <div class="card reveal-up">
+      <img src="images/icecream.jpg" alt="Ice Cream">
+      <h3>Ice Cream</h3>
+      <select class="weight-select" onchange="selectVariant('icecream',this)">
+        <option value="250ml" data-price="90">250ml – ₹90</option>
+        <option value="500ml" data-price="180">500ml – ₹180</option>
+      </select>
+      <p>Price: ₹<span id="price-icecream">90</span></p>
+      <button class="ripple" onclick="addToCart('Ice Cream','icecream')">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DELIVERY ================= -->
+<section class="areas reveal-up">
+  <h2>Delivery Areas</h2>
+  <p>Indore • Bhopal • Dewas • Shajapur</p>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer" id="contact">
+  <p>© 2026 Ksheera-Krishna Dairy</p>
+  <p>📞 +91 94071-56211</p>
+  <p>📍 Indore, Madhya Pradesh</p>
+</footer>
+
+<!-- ================= CART ================= -->
+<div class="cart">
+  <h2>🛒 Cart</h2>
+  <div id="cartItems"></div>
+  <h3>Total: ₹<span id="total">0</span></h3>
+  <button onclick="sendWhatsApp()">Order on WhatsApp</button>
+</div>
+<div class="floating-cart" onclick="toggleCart()">🛒</div>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>
