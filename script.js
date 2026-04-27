@@ -111,6 +111,18 @@ function selectVariant(key, select) {
 // ADD TO CART
 // ===============================
 function addToCart(name, key) {
+  // If variant not yet selected manually, get current values from the dropdown
+  if (!selectedVariant[key]) {
+    const select = document.getElementById("variant-" + key);
+    if (select) {
+      const option = select.options[select.selectedIndex];
+      selectedVariant[key] = {
+        weight: option.value,
+        price: Number(option.dataset.price)
+      };
+    }
+  }
+
   const v = selectedVariant[key] || { weight: "default", price: 0 };
   const fullName = `${name} (${v.weight})`;
 
