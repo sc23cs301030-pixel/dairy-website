@@ -81,8 +81,25 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 <script>
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyCXjgqsDeH0dQbrI0dUwd2GnKHkde9oE8c",
+  authDomain: "dairy-website-2e0ce.firebaseapp.com",
+  projectId: "dairy-website-2e0ce",
+  storageBucket: "dairy-website-2e0ce.firebasestorage.app",
+  messagingSenderId: "441392097621",
+  appId: "1:441392097621:web:2cc8f069ce9c948eea67dc",
+  measurementId: "G-2MG2FG5TQ7"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 function loginUser() {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -100,20 +117,25 @@ function loginUser() {
   card.style.opacity = '0';
   card.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
 
-  setTimeout(() => {
-    // Current user
+  setTimeout(async () => {
+    // 1. Save to LocalStorage (for current session)
     localStorage.setItem("userName", name);
     localStorage.setItem("userPhone", phone);
     localStorage.setItem("userLocation", location);
     localStorage.setItem("userPassword", password);
 
-    // Save to centralized users list for Admin
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    // Only add if not already there (simple logic)
-    const exists = users.find(u => u.phone === phone);
-    if (!exists) {
-      users.push({ name, phone, location, password });
-      localStorage.setItem("users", JSON.stringify(users));
+    // 2. Save to Firebase Firestore (for Admin Dashboard)
+    try {
+      await db.collection("users").doc(phone).set({
+        name: name,
+        phone: phone,
+        location: location,
+        password: password,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      console.log("User saved to Firebase");
+    } catch (error) {
+      console.error("Error saving user: ", error);
     }
 
     window.location.href = "index.html";

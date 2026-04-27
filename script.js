@@ -201,6 +201,25 @@ function saveCart() {
 }
 
 // ===============================
+// FIREBASE INIT
+// ===============================
+const firebaseConfig = {
+  apiKey: "AIzaSyCXjgqsDeH0dQbrI0dUwd2GnKHkde9oE8c",
+  authDomain: "dairy-website-2e0ce.firebaseapp.com",
+  projectId: "dairy-website-2e0ce",
+  storageBucket: "dairy-website-2e0ce.firebasestorage.app",
+  messagingSenderId: "441392097621",
+  appId: "1:441392097621:web:2cc8f069ce9c948eea67dc",
+  measurementId: "G-2MG2FG5TQ7"
+};
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// ===============================
 // WHATSAPP ORDER
 // ===============================
 function sendWhatsApp() {
@@ -215,6 +234,23 @@ function sendWhatsApp() {
 
   let total = 0;
   cart.forEach(item => total += item.price * item.qty);
+
+  // Prepare Order Data for Firebase
+  const orderData = {
+    customerName: name,
+    customerPhone: phone,
+    customerLocation: location,
+    items: cart,
+    total: total,
+    time: new Date().toLocaleString(),
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    status: "Pending"
+  };
+
+  // Save to Firebase
+  db.collection("orders").add(orderData)
+    .then(() => console.log("Order saved to Firebase"))
+    .catch(err => console.error("Error saving order: ", err));
 
   let msg = `🧾 *New Order from Krishna Dairy*\n\n`;
   msg += `*Name:* ${name}\n`;

@@ -196,79 +196,98 @@
 
 </div>
 
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 <script>
-  // LOAD DATA
-  const orders = JSON.parse(localStorage.getItem("orders")) || [];
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCXjgqsDeH0dQbrI0dUwd2GnKHkde9oE8c",
+    authDomain: "dairy-website-2e0ce.firebaseapp.com",
+    projectId: "dairy-website-2e0ce",
+    storageBucket: "dairy-website-2e0ce.firebasestorage.app",
+    messagingSenderId: "441392097621",
+    appId: "1:441392097621:web:2cc8f069ce9c948eea67dc",
+    measurementId: "G-2MG2FG5TQ7"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
   const usersContainer = document.getElementById("usersList");
   const ordersContainer = document.getElementById("ordersList");
 
-  // RENDER USERS
-  if (users.length === 0) {
-    usersContainer.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No users registered yet.</div>';
-  } else {
-    users.forEach((user, index) => {
-      usersContainer.innerHTML += `
-        <div class="card">
-          <div class="card-header">
-            <span class="id-tag">USER #${index + 1}</span>
+  // RENDER USERS (REAL-TIME)
+  db.collection("users").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+    usersContainer.innerHTML = "";
+    if (querySnapshot.empty) {
+      usersContainer.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No users registered yet.</div>';
+    } else {
+      querySnapshot.forEach((doc) => {
+        const user = doc.data();
+        usersContainer.innerHTML += `
+          <div class="card">
+            <div class="card-header">
+              <span class="id-tag">USER</span>
+            </div>
+            <div class="info-line"><strong>Name:</strong> ${user.name}</div>
+            <div class="info-line"><strong>Phone:</strong> ${user.phone}</div>
+            <div class="info-line"><strong>Address:</strong> ${user.location}</div>
+            <div class="password-box">
+              <strong>Password:</strong> <code>${user.password}</code>
+            </div>
+            <button class="btn-delete" onclick="deleteUser('${doc.id}')">Remove User</button>
           </div>
-          <div class="info-line"><strong>Name:</strong> ${user.name}</div>
-          <div class="info-line"><strong>Phone:</strong> ${user.phone}</div>
-          <div class="info-line"><strong>Address:</strong> ${user.location}</div>
-          <div class="password-box">
-            <strong>Password:</strong> <code>${user.password}</code>
-          </div>
-          <button class="btn-delete" onclick="deleteUser(${index})">Remove User</button>
-        </div>
-      `;
-    });
-  }
-
-  // RENDER ORDERS
-  if (orders.length === 0) {
-    ordersContainer.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No orders found.</div>';
-  } else {
-    orders.forEach((order, index) => {
-      let productLines = "";
-      order.items.forEach(item => {
-        productLines += `• ${item.name} × ${item.qty}<br>`;
+        `;
       });
+    }
+  });
 
-      ordersContainer.innerHTML += `
-        <div class="card">
-          <div class="card-header">
-            <span class="id-tag">${order.id}</span>
-            <span class="status-tag status-${order.source.toLowerCase()}">${order.source}</span>
+  // RENDER ORDERS (REAL-TIME)
+  db.collection("orders").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+    ordersContainer.innerHTML = "";
+    if (querySnapshot.empty) {
+      ordersContainer.innerHTML = '<div class="empty-state" style="grid-column: 1/-1">No orders found.</div>';
+    } else {
+      querySnapshot.forEach((doc) => {
+        const order = doc.data();
+        let productLines = "";
+        order.items.forEach(item => {
+          productLines += `• ${item.name} × ${item.qty}<br>`;
+        });
+
+        ordersContainer.innerHTML += `
+          <div class="card">
+            <div class="card-header">
+              <span class="id-tag">ORDER</span>
+              <span class="status-tag status-whatsapp">WHATSAPP</span>
+            </div>
+            <div class="info-line"><strong>Customer:</strong> ${order.customerName}</div>
+            <div class="info-line"><strong>Phone:</strong> ${order.customerPhone}</div>
+            <div class="products-list">
+              ${productLines}
+            </div>
+            <div style="font-weight:bold; font-size: 18px; margin-bottom: 5px;">Total: ₹${order.total}</div>
+            <div style="font-size: 12px; color: #888;">${order.time}</div>
+            <button class="btn-delete" onclick="deleteOrder('${doc.id}')">Archive Order</button>
           </div>
-          <div class="info-line"><strong>Customer:</strong> ${order.customerName}</div>
-          <div class="info-line"><strong>Phone:</strong> ${order.customerPhone}</div>
-          <div class="products-list">
-            ${productLines}
-          </div>
-          <div style="font-weight:bold; font-size: 18px; margin-bottom: 5px;">Total: ₹${order.total}</div>
-          <div style="font-size: 12px; color: #888;">${order.time}</div>
-          <button class="btn-delete" onclick="deleteOrder(${index})">Archive Order</button>
-        </div>
-      `;
-    });
-  }
+        `;
+      });
+    }
+  });
 
   // ACTIONS
-  function deleteOrder(i) {
+  function deleteOrder(id) {
     if (confirm("Archive this order?")) {
-      orders.splice(i, 1);
-      localStorage.setItem("orders", JSON.stringify(orders));
-      location.reload();
+      db.collection("orders").doc(id).delete();
     }
   }
 
-  function deleteUser(i) {
+  function deleteUser(id) {
     if (confirm("Delete this user's record?")) {
-      users.splice(i, 1);
-      localStorage.setItem("users", JSON.stringify(users));
-      location.reload();
+      db.collection("users").doc(id).delete();
     }
   }
 </script>
