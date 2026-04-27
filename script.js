@@ -70,6 +70,17 @@ const revealOnScroll = new IntersectionObserver((entries) => {
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 
+  // Initialize all variants so "Add to Cart" works immediately
+  document.querySelectorAll(".weight-select").forEach(select => {
+    const onchangeAttr = select.getAttribute("onchange");
+    if (onchangeAttr) {
+      const match = onchangeAttr.match(/'(.*?)'/);
+      if (match) {
+        selectVariant(match[1], select);
+      }
+    }
+  });
+
   // Observe all reveal elements
   document.querySelectorAll(".reveal-up, .reveal-left, .reveal-right").forEach(el => {
     revealOnScroll.observe(el);
@@ -111,20 +122,19 @@ function selectVariant(key, select) {
 // ADD TO CART
 // ===============================
 function addToCart(name, key) {
-  // If variant not yet selected manually, get current values from the dropdown
-  if (!selectedVariant[key]) {
-    const select = document.getElementById("variant-" + key);
+  let v = selectedVariant[key];
+  
+  // If for some reason variant isn't set, try to get it from the select element
+  if (!v) {
+    const select = document.querySelector(`select[onchange*="'${key}'"]`);
     if (select) {
-      const option = select.options[select.selectedIndex];
-      selectedVariant[key] = {
-        weight: option.value,
-        price: Number(option.dataset.price)
-      };
+      selectVariant(key, select);
+      v = selectedVariant[key];
     }
   }
 
-  const v = selectedVariant[key] || { weight: "default", price: 0 };
-  const fullName = `${name} (${v.weight})`;
+  const finalV = v || { weight: "Error", price: 0 };
+  const fullName = `${name} (${finalV.weight})`;
 
   const item = cart.find(i => i.name === fullName);
   if (item) {
@@ -132,7 +142,7 @@ function addToCart(name, key) {
   } else {
     cart.push({
       name: fullName,
-      price: v.price,
+      price: finalV.price,
       qty: 1
     });
   }
@@ -141,15 +151,17 @@ function addToCart(name, key) {
   renderCart();
   shakeCart();
   
-  // Show a small toast or feedback
-  const btn = event.target;
-  const originalText = btn.innerText;
-  btn.innerText = "Added! ✓";
-  btn.style.background = "#4CAF50";
-  setTimeout(() => {
-    btn.innerText = originalText;
-    btn.style.background = "";
-  }, 1000);
+  // Show a small toast or feedback on the button that was clicked
+  const btn = event ? (event.target.closest('button') || event.target) : null;
+  if (btn && btn.innerText) {
+    const originalText = btn.innerText;
+    btn.innerText = "Added! ✓";
+    btn.style.background = "#4CAF50";
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.background = "";
+    }, 1000);
+  }
 }
 
 function shakeCart() {
